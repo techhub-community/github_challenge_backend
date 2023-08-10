@@ -2,9 +2,15 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      bubble.cpp
+      bubble.h
+      test_bubble.cpp
   pull_request:
-    branches: [ "main" ]
+    paths:
+      bubble.cpp
+      bubble.h
+      test_bubble.cpp
 
 jobs:
   Run_cpp:
@@ -22,3 +28,11 @@ jobs:
         run: |
           g++ bubble.cpp test_bubble.cpp -o program
           ./program
+      - name: Report Test Status
+        run: |
+          if [[ $? -eq 0 ]]; then
+            echo "Tests passed."
+          else
+            echo "Tests failed."
+            exit 1
+          fi
