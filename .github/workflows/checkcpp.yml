@@ -1,0 +1,38 @@
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+      bubble.cpp
+      bubble.h
+      test_bubble.cpp
+  pull_request:
+    paths:
+      bubble.cpp
+      bubble.h
+      test_bubble.cpp
+
+jobs:
+  Run_cpp:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Setup Compiler
+        run: sudo apt-get install g++
+      
+      - name: Compile and Run Tests
+        run: |
+          g++ bubble.cpp test_bubble.cpp -o program
+          ./program
+      - name: Report Test Status
+        run: |
+          if [[ $? -eq 0 ]]; then
+            echo "Tests passed."
+          else
+            echo "Tests failed."
+            exit 1
+          fi
