@@ -1,0 +1,24 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  Run_cpp:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Setup Compiler
+        run: sudo apt-get install g++
+      
+      - name: Compile and Run Tests
+        run: |
+          g++ bubble.cpp test_bubble.cpp -o program
+          ./program
